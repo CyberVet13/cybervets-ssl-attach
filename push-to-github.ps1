@@ -27,12 +27,28 @@ if ($CreateRepo) {
 
 Write-Host "Pushing to origin..." -ForegroundColor Cyan
 Set-Location $PSScriptRoot
-$pushUrl = "https://CyberVet13:$token@github.com/CyberVet13/$repoName.git"
-git push $pushUrl master 2>&1
-$token = $null  # Clear from memory
+
+# Use credential helper to avoid token in command line / process args / history
+$credScript = Join-Path $env:TEMP "git-cred-helper-$([Guid]::NewGuid().ToString('N').Substring(0,8)).ps1"
+@'
+$null = [System.Console]::In.ReadToEnd()  # consume credential protocol from stdin
+Write-Output "username=CyberVet13"
+Write-Output "password=$env:GIT_CREDENTIAL_PASSWORD"
+'@ | Out-File -Encoding utf8 $credScript
+try {
+  $env:GIT_CREDENTIAL_PASSWORD = $token
+  $credHelper = "!powershell -NoProfile -ExecutionPolicy Bypass -File `"$credScript`""
+  $branch = git branch --show-current
+  if (-not $branch) { $branch = "main" }  # fallback for detached HEAD
+  git -c "credential.helper=$credHelper" push -u origin "${branch}:main" 2>&1
+} finally {
+  $env:GIT_CREDENTIAL_PASSWORD = $null
+  $token = $null
+  if (Test-Path $credScript) { Remove-Item $credScript -Force -ErrorAction SilentlyContinue }
+}
 
 if ($LASTEXITCODE -eq 0) {
-  git branch --set-upstream-to=origin/master master 2>$null
+  git branch --set-upstream-to=origin/main (git branch --show-current) 2>$null
   Write-Host "`nDone! https://github.com/CyberVet13/$repoName" -ForegroundColor Green
 } else {
   Write-Host "`nPush failed. Check repo exists and token has repo scope." -ForegroundColor Red

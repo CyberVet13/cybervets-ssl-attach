@@ -256,10 +256,13 @@ try {
     $etag = $cfg.ETag
     $config = $cfg.DistributionConfig
 
-    # Ensure aliases include root + www
-    $aliasList = @($domain, "www.$domain")
+    # Merge root + www into existing aliases (do not overwrite other aliases)
+    $existing = @()
+    if ($config.Aliases -and $config.Aliases.Items) { $existing = @($config.Aliases.Items) }
+    $required = @($domain, "www.$domain")
+    $aliasList = ($existing + $required) | Select-Object -Unique
     $config.Aliases.Quantity = $aliasList.Count
-    $config.Aliases.Items = $aliasList
+    $config.Aliases.Items = @($aliasList)
 
     # Set ViewerCertificate to ACM
     $config.ViewerCertificate = @{
