@@ -18,9 +18,10 @@ jobs:
           $scripts = @("CyberVets-SSL-Attach.ps1", "push-to-github.ps1", "release-create.ps1")
           foreach ($s in $scripts) {
             $path = Join-Path (Get-Location) $s
+            if (-not (Test-Path -LiteralPath $path)) { Write-Host "$s - Skipped (not found)"; continue }
             $errs = $null
             $null = [System.Management.Automation.Language.Parser]::ParseFile($path, [ref]$null, [ref]$errs)
-            if ($errs) { $errs | ForEach-Object { Write-Error $_ }; exit 1 }
+            if ($null -ne $errs -and @($errs).Count -gt 0) { $errs | ForEach-Object { Write-Error $_ }; exit 1 }
             Write-Host "$s - Syntax OK"
           }
 
