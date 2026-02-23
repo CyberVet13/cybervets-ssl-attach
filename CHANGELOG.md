@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2026-02-25
+
+### Added
+
+- **website/** – CyberVets Solutions static site (S3/CloudFront)
+  - Landing page, 404, dark theme (DM Sans, JetBrains Mono)
+  - deploy-website.ps1 – S3 static hosting deploy with -MakePublic
+  - CloudFormation template for S3 + CloudFront
+- **Validate workflow** – Include website/deploy-website.ps1 in CI
+
 ## [1.0.3] - 2026-02-25
 
 ### Fixed

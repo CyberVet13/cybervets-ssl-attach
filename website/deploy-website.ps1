@@ -41,10 +41,10 @@ $source = Join-Path $scriptDir "."
 
 if ($WhatIfPreference) {
   Write-Host "[WhatIf] Would sync $source to s3://$BucketName"
-  aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "README.md" --dryrun
+  aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --dryrun
 } else {
   Write-Host "Uploading files..."
-  aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "README.md" --delete
+  aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --delete
 }
 
 # Optional: apply public read policy

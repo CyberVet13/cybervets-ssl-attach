@@ -15,7 +15,7 @@ jobs:
       - name: Validate PowerShell scripts
         shell: pwsh
         run: |
-          $scripts = @("CyberVets-SSL-Attach.ps1", "push-to-github.ps1", "release-create.ps1")
+          $scripts = @("CyberVets-SSL-Attach.ps1", "push-to-github.ps1", "release-create.ps1", "website/deploy-website.ps1")
           foreach ($s in $scripts) {
             $path = Join-Path (Get-Location) $s
             if (-not (Test-Path -LiteralPath $path)) { Write-Host "$s - Skipped (not found)"; continue }
