@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1] - 2026-02-22
+
+### Fixed
+
+- **Release workflow** – Dynamic release notes from `RELEASE_NOTES_${TAG}.md` or CHANGELOG section; no longer hardcoded to v1.0.0
+- **Validate workflow** – Include `release-create.ps1` in CI syntax validation
+- **Pester tests** – Fix single-parse-error detection (`@($errs).Count` instead of `$errs.Count`)
+- **release-create.ps1** – Guard against null `Response` in exception handler (network errors, timeouts)
+
 ## [1.0.0] - 2026-02-23
 
 ### Added
