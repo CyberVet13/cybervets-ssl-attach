@@ -1,6 +1,6 @@
 # CyberVets SSL Attach Helper
 
-PowerShell script for attaching ACM SSL/TLS certificates to **CloudFront** or **Application Load Balancers (ALB)**, with optional Route 53 DNS updates.
+PowerShell script for attaching ACM SSL/TLS certificates to **CloudFront** or **Application Load Balancers (ALB)**, with optional Route 53 DNS updates. Part of the CyberVets Solutions AWS toolkit.
 
 **GitHub:** [https://github.com/CyberVet13/cybervets-ssl-attach](https://github.com/CyberVet13/cybervets-ssl-attach)
 
@@ -70,6 +70,13 @@ Shows planned changes without applying them.
 - **Certificate selection**: Prefers exact domain match, falls back to wildcard; picks newest by expiry when multiple match.
 - **CloudFront**: SNI-only, TLSv1.2_2021, redirect-to-https on all cache behaviors.
 - **Route 53**: UPSERTs A (and AAAA for dual-stack ALB) ALIAS records for root and www.
+
+## Testing
+
+```powershell
+Install-Module -Name Pester -Force -SkipPublisherCheck
+Invoke-Pester -Path ./tests -Output Detailed
+```
 
 ## Help
 
