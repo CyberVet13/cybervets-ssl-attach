@@ -32,7 +32,7 @@ Describe 'CyberVets-SSL-Attach script' {
   It 'loads without syntax errors' {
     $errs = $null
     $null = [System.Management.Automation.Language.Parser]::ParseFile($scriptPath, [ref]$null, [ref]$errs)
-    if ($errs -and $errs.Count -gt 0) { throw "Parse errors: $($errs -join '; ')" }
+    if ($null -ne $errs -and @($errs).Count -gt 0) { throw "Parse errors: $($errs -join '; ')" }
   }
 
   It 'has expected parameters' {
