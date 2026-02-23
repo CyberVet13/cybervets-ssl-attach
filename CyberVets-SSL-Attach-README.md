@@ -69,7 +69,7 @@ Shows planned changes without applying them.
 - **ACM region**: CloudFront requires certs in `us-east-1`; ALB requires certs in the same region as the ALB.
 - **Certificate selection**: Prefers exact domain match, falls back to wildcard; picks newest by expiry when multiple match.
 - **CloudFront**: SNI-only, TLSv1.2_2021, redirect-to-https on all cache behaviors.
-- **Route 53**: UPSERTs A (and AAAA for dual-stack ALB) ALIAS records for root and www.
+- **Route 53**: UPSERTs ALIAS records for root and www. CloudFront always gets A + AAAA (inherently dual-stack). ALB gets A always; AAAA only when the ALB is dual-stack.
 
 ## Testing
 
