@@ -34,6 +34,9 @@
 .PARAMETER WhatIf
   Show what would be done without making changes.
 
+.PARAMETER Verbose
+  Show detailed progress messages.
+
 .EXAMPLE
   .\CyberVets-SSL-Attach.ps1
   Interactive mode with prompts.
@@ -88,6 +91,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 # ---- Pre-flight: verify AWS CLI ----
+Write-Verbose "Checking AWS CLI..."
 if (-not (Get-Command aws -ErrorAction SilentlyContinue)) {
   throw "AWS CLI not found. Install it from https://aws.amazon.com/cli/ and run 'aws configure'."
 }
@@ -122,6 +126,7 @@ function Choose($title, $options) {
 
 function Invoke-AwsCli {
   param([string]$Command)
+  Write-Verbose "AWS: $Command"
   $output = Invoke-Expression $Command 2>&1
   if ($LASTEXITCODE -ne 0) {
     throw "AWS CLI failed (exit $LASTEXITCODE): $Command`n$output"
@@ -166,7 +171,8 @@ if ($CertificateArn) {
   Write-Host "Certificate domains (SANs):"
   $best.SubjectAlternativeNames | ForEach-Object { Write-Host "  - $_" }
 } else {
-  Write-Host "`n== 2) Finding ISSUED ACM certificate for $domain in $regionAcm =="
+  Write-Verbose "ACM region: $regionAcm"
+Write-Host "`n== 2) Finding ISSUED ACM certificate for $domain in $regionAcm =="
 
   # Find best matching cert (issued) that includes domain (and ideally www)
   $certsJson = Invoke-AwsCli "aws acm list-certificates --region $regionAcm --certificate-statuses ISSUED --output json" | ConvertFrom-Json
@@ -251,6 +257,7 @@ try {
       $distId = ($pick.Split("|")[0]).Trim()
     }
 
+    Write-Verbose "Fetching CloudFront config for $distId..."
     Write-Host "`nUpdating distribution $distId to use ACM cert + aliases..."
     $cfg = Invoke-AwsCli "aws cloudfront get-distribution-config --id $distId --output json" | ConvertFrom-Json
     $etag = $cfg.ETag
@@ -417,7 +424,8 @@ try {
     if ($WhatIfPreference) {
       Write-Host "`n[WhatIf] Would attach certificate $certArn to ALB listener $listenerArn"
     } else {
-      Write-Host "`nAttaching certificate to ALB listener..."
+      Write-Verbose "Attaching cert to listener $listenerArn"
+    Write-Host "`nAttaching certificate to ALB listener..."
       Invoke-AwsCli "aws elbv2 modify-listener --region $regionAlb --listener-arn $listenerArn --certificates `"CertificateArn=$certArn`"" | Out-Null
       Write-Host "ALB listener updated."
     }

@@ -62,6 +62,7 @@ Shows planned changes without applying them.
 | `-ListenerArn` | ALB listener ARN (use with `-LoadBalancerArn`) |
 | `-CertificateArn` | ACM certificate ARN (skips auto-discovery) |
 | `-WhatIf` | Dry-run; no changes made |
+| `-Verbose` | Show detailed progress |
 
 ## Behavior
 
