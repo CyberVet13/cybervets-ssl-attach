@@ -1,4 +1,8 @@
-$scriptPath = (Resolve-Path (Join-Path (Join-Path $PSScriptRoot '..') 'CyberVets-SSL-Attach.ps1')).Path
+# Resolve script path: works on Windows and Linux (avoid Resolve-Path for cross-platform)
+$root = if ($PSScriptRoot) { Split-Path $PSScriptRoot -Parent } else { Split-Path (Get-Location) -Parent }
+$scriptPath = Join-Path $root 'CyberVets-SSL-Attach.ps1'
+$scriptPath = [System.IO.Path]::GetFullPath($scriptPath)
+if (-not (Test-Path -LiteralPath $scriptPath)) { throw "Script not found: $scriptPath (root=$root)" }
 
 # Same logic as CyberVets-SSL-Attach.ps1
 function Merge-CloudFrontAliases {

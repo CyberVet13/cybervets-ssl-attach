@@ -29,5 +29,7 @@ jobs:
         run: |
           Install-Module -Name Pester -RequiredVersion 5.5.0 -Force -SkipPublisherCheck -Scope CurrentUser
           Import-Module Pester -Force
-          (Get-Module Pester).Version
+          $scriptPath = Join-Path (Get-Location) 'CyberVets-SSL-Attach.ps1'
+          Write-Host "Script exists: $(Test-Path $scriptPath)"
+          Write-Host "Pester: $((Get-Module Pester).Version)"
           Invoke-Pester -Path ./tests/CyberVets-SSL-Attach.Tests.ps1 -Output Detailed
