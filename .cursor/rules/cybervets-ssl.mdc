@@ -1,0 +1,14 @@
+---
+description: CyberVets SSL Attach Helper - AWS certificate and DNS automation
+globs: CyberVets-SSL-Attach.ps1
+alwaysApply: false
+---
+
+# CyberVets SSL Toolkit
+
+- PowerShell script for attaching ACM certs to CloudFront or ALB with optional Route 53 updates
+- Always use us-east-1 for CloudFront ACM; ALB cert must match ALB region
+- Prefer exact domain match for certs; fallback to wildcard; pick newest by NotAfter
+- CloudFront: SNI-only, TLSv1.2_2021, redirect-to-https on all behaviors
+- Route 53: CloudFront hosted zone Z2FDTNDATAQYW2; ALB uses CanonicalHostedZoneId
+- Supports -WhatIf, -CertificateArn, -DistributionId, -LoadBalancerArn, -ListenerArn

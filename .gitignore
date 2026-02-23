@@ -1,0 +1,13 @@
+# Temp files from script runs
+cf-config-*.json
+r53-alias-*.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
