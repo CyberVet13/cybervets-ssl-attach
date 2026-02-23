@@ -1,8 +1,11 @@
-# Create GitHub Release v1.0.0
-# Usage: $env:GITHUB_TOKEN = "ghp_xxx"; .\release-create.ps1
-#    or: .\release-create.ps1 -Token ghp_xxx
-#    or: .\release-create.ps1  (will prompt for token)
-param([string]$Token = $env:GITHUB_TOKEN)
+# Create GitHub Release (manual fallback when not using tag-based workflow)
+# Usage: $env:GITHUB_TOKEN = "ghp_xxx"; .\release-create.ps1 -Version 1.0.1
+#    or: .\release-create.ps1 -Version 1.0.1 -Token ghp_xxx
+#    or: .\release-create.ps1  (defaults to v1.0.0, will prompt for token)
+param(
+  [string]$Version = "1.0.0",
+  [string]$Token = $env:GITHUB_TOKEN
+)
 
 if (-not $Token) {
   $sec = Read-Host "GitHub Personal Access Token (repo scope)" -AsSecureString
@@ -12,11 +15,23 @@ if (-not $Token) {
 }
 if (-not $Token) { throw "Token required. Set GITHUB_TOKEN or enter when prompted." }
 
+$tag = if ($Version -match '^v') { $Version } else { "v$Version" }
 $owner = "CyberVet13"
 $repo = "cybervets-ssl-attach"
-$tag = "v1.0.0"
-$notesPath = Join-Path $PSScriptRoot "RELEASE_NOTES_v1.0.0.md"
-$notes = Get-Content $notesPath -Raw
+
+# Resolve release notes: RELEASE_NOTES_${tag}.md, else CHANGELOG section, else minimal
+$notesPath = Join-Path $PSScriptRoot "RELEASE_NOTES_${tag}.md"
+if (Test-Path -LiteralPath $notesPath) {
+  $notes = Get-Content $notesPath -Raw
+} else {
+  $changelogPath = Join-Path $PSScriptRoot "CHANGELOG.md"
+  $verEsc = [regex]::Escape($Version -replace '^v', '')
+  if (Test-Path -LiteralPath $changelogPath) {
+    $content = Get-Content $changelogPath -Raw
+    if ($content -match "(?ms)^## \[$verEsc\].*?(?=^## \[|$)") { $notes = $Matches[0].Trim() }
+    else { $notes = "## $tag" }
+  } else { $notes = "## $tag" }
+}
 
 $body = @{
   tag_name         = $tag
@@ -39,7 +54,7 @@ try {
   $code = $null
   if ($_.Exception.Response) { $code = $_.Exception.Response.StatusCode.value__ }
   if ($code -eq 422) {
-    Write-Host "Release v1.0.0 may already exist. Check: https://github.com/$owner/$repo/releases" -ForegroundColor Yellow
+    Write-Host "Release $tag may already exist. Check: https://github.com/$owner/$repo/releases" -ForegroundColor Yellow
   } elseif ($code -eq 401) {
     Write-Host "Unauthorized. Use a PAT with 'repo' scope: .\release-create.ps1 -Token YOUR_PAT" -ForegroundColor Red
   } else {

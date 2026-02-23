@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2026-02-25
+
+### Added
+
+- **release-create.ps1** – `-Version` parameter to create releases for any version; resolves notes from `RELEASE_NOTES_${tag}.md` or CHANGELOG section
+
 ## [1.0.1] - 2026-02-24
 
 ### Fixed
