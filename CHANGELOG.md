@@ -20,9 +20,14 @@ All notable changes to this project will be documented in this file.
 - **push-to-github.ps1** – Helper for pushing with Personal Access Token
   - Credential helper (no token in command line)
   - Push to `main` branch
-- **GitHub Actions** – PowerShell syntax validation on push/PR
-- **README** – Usage, parameters, examples
+- **GitHub Actions** – PowerShell syntax validation + Pester tests on push/PR (windows-latest)
+- **Pester tests** – Script load, parameters, CloudFront alias merge logic
+- **README** – Usage, parameters, examples, testing
 - **LICENSE** – MIT
+
+### Changed
+
+- **Merge-CloudFrontAliases** – Cross-platform implementation (hashtable dedup) for consistent behavior on Windows and Linux
 
 ### Security
 

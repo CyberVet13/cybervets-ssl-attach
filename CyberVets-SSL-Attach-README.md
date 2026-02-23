@@ -74,9 +74,11 @@ Shows planned changes without applying them.
 ## Testing
 
 ```powershell
-Install-Module -Name Pester -Force -SkipPublisherCheck
-Invoke-Pester -Path ./tests -Output Detailed
+Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser
+Invoke-Pester -Path ./tests
 ```
+
+For detailed output (Pester 5+): `Invoke-Pester -Path ./tests -Output Detailed`
 
 ## Help
 
