@@ -12,20 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup PowerShell
-        uses: actions/setup-powershell@v1
-        with:
-          pwsh: true
-
       - name: Validate PowerShell scripts
+        shell: pwsh
         run: |
-          pwsh -NoProfile -Command '
-            $scripts = @("CyberVets-SSL-Attach.ps1", "push-to-github.ps1")
-            foreach ($s in $scripts) {
-              $path = Join-Path (Get-Location) $s
-              $errs = $null
-              $null = [System.Management.Automation.Language.Parser]::ParseFile($path, [ref]$null, [ref]$errs)
-              if ($errs) { $errs | ForEach-Object { Write-Error $_ }; exit 1 }
-              Write-Host "$s - Syntax OK"
-            }
-          '
+          $scripts = @("CyberVets-SSL-Attach.ps1", "push-to-github.ps1")
+          foreach ($s in $scripts) {
+            $path = Join-Path (Get-Location) $s
+            $errs = $null
+            $null = [System.Management.Automation.Language.Parser]::ParseFile($path, [ref]$null, [ref]$errs)
+            if ($errs) { $errs | ForEach-Object { Write-Error $_ }; exit 1 }
+            Write-Host "$s - Syntax OK"
+          }
