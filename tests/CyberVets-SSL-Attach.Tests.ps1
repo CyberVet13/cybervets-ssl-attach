@@ -1,8 +1,13 @@
-# Resolve script path: CI uses GITHUB_WORKSPACE; local uses PSScriptRoot
-$root = if ($env:GITHUB_WORKSPACE) { $env:GITHUB_WORKSPACE } else { Split-Path $PSScriptRoot -Parent }
-$scriptPath = Join-Path $root 'CyberVets-SSL-Attach.ps1'
+# Resolve script path: CI passes SCRIPT_PATH; local uses PSScriptRoot or GITHUB_WORKSPACE
+$scriptPath = if ($env:SCRIPT_PATH) {
+  $env:SCRIPT_PATH
+} elseif ($env:GITHUB_WORKSPACE) {
+  Join-Path $env:GITHUB_WORKSPACE 'CyberVets-SSL-Attach.ps1'
+} else {
+  Join-Path (Split-Path $PSScriptRoot -Parent) 'CyberVets-SSL-Attach.ps1'
+}
 $scriptPath = [System.IO.Path]::GetFullPath($scriptPath)
-if (-not (Test-Path -LiteralPath $scriptPath)) { throw "Script not found: $scriptPath (root=$root)" }
+if (-not (Test-Path -LiteralPath $scriptPath)) { throw "Script not found: $scriptPath" }
 
 # Same logic as CyberVets-SSL-Attach.ps1 (cross-platform: avoid Select-Object -Unique pipeline quirks)
 function Merge-CloudFrontAliases {
