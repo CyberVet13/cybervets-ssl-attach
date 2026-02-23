@@ -27,5 +27,6 @@ jobs:
       - name: Run Pester tests
         shell: pwsh
         run: |
+          Set-Location $env:GITHUB_WORKSPACE
           Install-Module -Name Pester -RequiredVersion 5.5.0 -Force -SkipPublisherCheck -Scope CurrentUser
           Invoke-Pester -Path ./tests/CyberVets-SSL-Attach.Tests.ps1 -Output Detailed

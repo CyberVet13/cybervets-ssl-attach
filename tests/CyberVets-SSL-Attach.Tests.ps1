@@ -1,5 +1,5 @@
-# Resolve script path: works on Windows and Linux (avoid Resolve-Path for cross-platform)
-$root = Split-Path $PSScriptRoot -Parent
+# Resolve script path: CI uses GITHUB_WORKSPACE; local uses PSScriptRoot
+$root = if ($env:GITHUB_WORKSPACE) { $env:GITHUB_WORKSPACE } else { Split-Path $PSScriptRoot -Parent }
 $scriptPath = Join-Path $root 'CyberVets-SSL-Attach.ps1'
 $scriptPath = [System.IO.Path]::GetFullPath($scriptPath)
 if (-not (Test-Path -LiteralPath $scriptPath)) { throw "Script not found: $scriptPath (root=$root)" }
