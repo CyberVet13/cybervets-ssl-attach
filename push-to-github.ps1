@@ -37,7 +37,8 @@ Write-Output "password=$env:GIT_CREDENTIAL_PASSWORD"
 '@ | Out-File -Encoding utf8 $credScript
 try {
   $env:GIT_CREDENTIAL_PASSWORD = $token
-  $credHelper = "!powershell -NoProfile -ExecutionPolicy Bypass -File `"$credScript`""
+  $credScriptPath = $credScript.Replace('\', '/')  # Git on Windows may strip backslashes
+  $credHelper = "!powershell -NoProfile -ExecutionPolicy Bypass -File `"$credScriptPath`""
   $branch = git branch --show-current
   if (-not $branch) { $branch = "main" }  # fallback for detached HEAD
   git -c "credential.helper=$credHelper" push -u origin "${branch}:main" 2>&1
