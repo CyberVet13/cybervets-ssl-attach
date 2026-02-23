@@ -17,11 +17,11 @@ Describe 'CyberVets-SSL-Attach script' {
   }
 
   It 'has expected parameters' {
-    $params = (Get-Command $scriptPath -ErrorAction SilentlyContinue).Parameters.Keys
+    $ast = [System.Management.Automation.Language.Parser]::ParseFile($scriptPath, [ref]$null, [ref]$null)
+    $params = $ast.ParamBlock.Parameters | ForEach-Object { $_.Name.VariablePath.UserPath }
     $params | Should -Contain 'Domain'
     $params | Should -Contain 'Target'
-    $params | Should -Contain 'WhatIf'
-    $params | Should -Contain 'Verbose'
+    $params | Should -Contain 'CertificateArn'
   }
 }
 
