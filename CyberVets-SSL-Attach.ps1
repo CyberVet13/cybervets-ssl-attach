@@ -172,7 +172,7 @@ if ($CertificateArn) {
   $best.SubjectAlternativeNames | ForEach-Object { Write-Host "  - $_" }
 } else {
   Write-Verbose "ACM region: $regionAcm"
-Write-Host "`n== 2) Finding ISSUED ACM certificate for $domain in $regionAcm =="
+  Write-Host "`n== 2) Finding ISSUED ACM certificate for $domain in $regionAcm =="
 
   # Find best matching cert (issued) that includes domain (and ideally www)
   $certsJson = Invoke-AwsCli "aws acm list-certificates --region $regionAcm --certificate-statuses ISSUED --output json" | ConvertFrom-Json
@@ -425,7 +425,7 @@ try {
       Write-Host "`n[WhatIf] Would attach certificate $certArn to ALB listener $listenerArn"
     } else {
       Write-Verbose "Attaching cert to listener $listenerArn"
-    Write-Host "`nAttaching certificate to ALB listener..."
+      Write-Host "`nAttaching certificate to ALB listener..."
       Invoke-AwsCli "aws elbv2 modify-listener --region $regionAlb --listener-arn $listenerArn --certificates `"CertificateArn=$certArn`"" | Out-Null
       Write-Host "ALB listener updated."
     }
