@@ -134,6 +134,25 @@ function Invoke-AwsCli {
   return $output
 }
 
+# Merge aliases: existing + root + www, deduplicated (cross-platform)
+function Merge-CloudFrontAliases {
+  param($ExistingItems, $Domain)
+  $existing = @()
+  if ($ExistingItems) { $existing = @($ExistingItems) }
+  $required = @($Domain, "www.$Domain")
+  $combined = $existing + $required
+  $seen = @{}
+  $result = [System.Collections.ArrayList]::new()
+  foreach ($item in $combined) {
+    $key = [string]$item
+    if (-not $seen[$key]) {
+      $seen[$key] = $true
+      $null = $result.Add($item)
+    }
+  }
+  return [string[]]$result.ToArray()
+}
+
 # Convert Windows path to file:// URL for AWS CLI (handles backslashes)
 function Get-FileUriForAws {
   param([string]$Path)
@@ -266,8 +285,7 @@ try {
     # Merge root + www into existing aliases (do not overwrite other aliases)
     $existing = @()
     if ($config.Aliases -and $config.Aliases.Items) { $existing = @($config.Aliases.Items) }
-    $required = @($domain, "www.$domain")
-    $aliasList = ($existing + $required) | Select-Object -Unique
+    $aliasList = Merge-CloudFrontAliases -ExistingItems $existing -Domain $domain
     $config.Aliases.Quantity = $aliasList.Count
     $config.Aliases.Items = @($aliasList)
 
