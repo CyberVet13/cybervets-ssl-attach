@@ -36,7 +36,8 @@ try {
   $response = Invoke-RestMethod -Uri "https://api.github.com/repos/$owner/$repo/releases" -Method Post -Headers $headers -Body $body -ContentType "application/json; charset=utf-8"
   Write-Host "Release created: $($response.html_url)" -ForegroundColor Green
 } catch {
-  $code = $_.Exception.Response.StatusCode.value__
+  $code = $null
+  if ($_.Exception.Response) { $code = $_.Exception.Response.StatusCode.value__ }
   if ($code -eq 422) {
     Write-Host "Release v1.0.0 may already exist. Check: https://github.com/$owner/$repo/releases" -ForegroundColor Yellow
   } elseif ($code -eq 401) {
