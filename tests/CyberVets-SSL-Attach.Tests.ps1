@@ -13,41 +13,40 @@ Describe 'CyberVets-SSL-Attach script' {
   It 'loads without syntax errors' {
     $errs = $null
     $null = [System.Management.Automation.Language.Parser]::ParseFile($scriptPath, [ref]$null, [ref]$errs)
-    $errs | Should -BeNullOrEmpty
+    if ($errs -and $errs.Count -gt 0) { throw "Parse errors: $($errs -join '; ')" }
   }
 
   It 'has expected parameters' {
     $ast = [System.Management.Automation.Language.Parser]::ParseFile($scriptPath, [ref]$null, [ref]$null)
     $params = $ast.ParamBlock.Parameters | ForEach-Object { $_.Name.VariablePath.UserPath }
-    $params | Should -Contain 'Domain'
-    $params | Should -Contain 'Target'
-    $params | Should -Contain 'CertificateArn'
+    foreach ($p in @('Domain', 'Target', 'CertificateArn')) {
+      if ($params -notcontains $p) { throw "Missing parameter: $p" }
+    }
   }
 }
 
 Describe 'CloudFront alias merge logic' {
   It 'merges root and www into empty aliases' {
     $result = @(Merge-CloudFrontAliases -ExistingItems $null -Domain 'example.com')
-    $result | Should -Contain 'example.com'
-    $result | Should -Contain 'www.example.com'
-    $result.Count | Should -Be 2
+    if ($result -notcontains 'example.com') { throw "Missing example.com" }
+    if ($result -notcontains 'www.example.com') { throw "Missing www.example.com" }
+    if ($result.Count -ne 2) { throw "Expected Count 2, got $($result.Count)" }
   }
 
   It 'preserves existing aliases' {
     $existing = @('api.example.com', 'cdn.example.com')
     $result = @(Merge-CloudFrontAliases -ExistingItems $existing -Domain 'example.com')
-    $result | Should -Contain 'example.com'
-    $result | Should -Contain 'www.example.com'
-    $result | Should -Contain 'api.example.com'
-    $result | Should -Contain 'cdn.example.com'
-    $result.Count | Should -Be 4
+    foreach ($x in @('example.com', 'www.example.com', 'api.example.com', 'cdn.example.com')) {
+      if ($result -notcontains $x) { throw "Missing: $x" }
+    }
+    if ($result.Count -ne 4) { throw "Expected Count 4, got $($result.Count)" }
   }
 
   It 'deduplicates when domain already in aliases' {
     $existing = @('example.com', 'www.example.com')
     $result = @(Merge-CloudFrontAliases -ExistingItems $existing -Domain 'example.com')
-    $result.Count | Should -Be 2
-    $result | Should -Contain 'example.com'
-    $result | Should -Contain 'www.example.com'
+    if ($result.Count -ne 2) { throw "Expected Count 2, got $($result.Count)" }
+    if ($result -notcontains 'example.com') { throw "Missing example.com" }
+    if ($result -notcontains 'www.example.com') { throw "Missing www.example.com" }
   }
 }
