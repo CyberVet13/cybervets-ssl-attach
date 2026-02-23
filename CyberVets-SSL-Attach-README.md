@@ -2,6 +2,8 @@
 
 PowerShell script for attaching ACM SSL/TLS certificates to **CloudFront** or **Application Load Balancers (ALB)**, with optional Route 53 DNS updates.
 
+**GitHub:** [https://github.com/CyberVet13/cybervets-ssl-attach](https://github.com/CyberVet13/cybervets-ssl-attach)
+
 ## Prerequisites
 
 - **AWS CLI** installed and configured (`aws configure`)
