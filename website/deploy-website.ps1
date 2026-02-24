@@ -16,10 +16,10 @@ if (-not (Get-Command aws -ErrorAction SilentlyContinue)) {
   throw "AWS CLI not found. Install from https://aws.amazon.com/cli/"
 }
 
-# Ensure bucket exists
-$bucketExists = aws s3api head-bucket --bucket $BucketName 2>$null
-if (-not $bucketExists) {
-  if ($WhatIfPreference) {
+# Ensure bucket exists (head-bucket returns no stdout; check exit code)
+aws s3api head-bucket --bucket $BucketName 2>$null
+if ($LASTEXITCODE -ne 0) {
+  if ($WhatIf) {
     Write-Host "[WhatIf] Would create S3 bucket $BucketName in $Region"
   } else {
     Write-Host "Creating bucket $BucketName..."
@@ -31,7 +31,7 @@ if (-not $bucketExists) {
 }
 
 # Enable static website hosting
-if (-not $WhatIfPreference) {
+if (-not $WhatIf) {
   Write-Host "Configuring static website hosting..."
   aws s3 website "s3://$BucketName" --index-document index.html --error-document 404.html
 }
@@ -39,7 +39,7 @@ if (-not $WhatIfPreference) {
 # Sync website files (exclude deploy script and README)
 $source = Join-Path $scriptDir "."
 
-if ($WhatIfPreference) {
+if ($WhatIf) {
   Write-Host "[WhatIf] Would sync $source to s3://$BucketName"
   aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --dryrun
 } else {
@@ -48,7 +48,7 @@ if ($WhatIfPreference) {
 }
 
 # Optional: apply public read policy
-if ($MakePublic -and -not $WhatIfPreference) {
+if ($MakePublic -and -not $WhatIf) {
   Write-Host "Disabling Block Public Access (required for website)..."
   aws s3api put-public-access-block --bucket $BucketName --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
   $policy = @{

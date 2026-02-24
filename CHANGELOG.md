@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.5] - 2026-02-25
+
+### Fixed
+
+- **deploy-website.ps1** – Use `$LASTEXITCODE` for head-bucket (no stdout on success); use `$WhatIf` parameter instead of `$WhatIfPreference`
+
 ## [1.0.4] - 2026-02-25
 
 ### Added
