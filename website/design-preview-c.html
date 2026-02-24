@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; color: #39ff14; background: #0d1117; min-height: 100%; }
+    .container { max-width: 100%; padding: 0 1rem; }
+    .header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #21262d; }
+    .logo { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: #39ff14; text-decoration: none; font-size: 0.9rem; }
+    .logo:hover { color: #7ee787; }
+    .logo::before { content: '> '; color: #8b949e; }
+    .nav { display: flex; gap: 1rem; }
+    .nav a { color: #8b949e; text-decoration: none; font-size: 0.8rem; }
+    .nav a:hover { color: #39ff14; }
+    .hero { padding: 2rem 0; }
+    .hero h1 { font-size: 1.35rem; font-weight: 600; margin: 0 0 0.5rem; color: #c9d1d9; font-family: 'JetBrains Mono', monospace; }
+    .hero-sub { color: #8b949e; font-size: 0.85rem; margin: 0 0 1rem; max-width: 30ch; }
+    .cli-prompt { font-size: 0.75rem; color: #8b949e; margin-bottom: 0.5rem; }
+    .cli-prompt span { color: #39ff14; }
+    .btn { display: inline-block; padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 500; text-decoration: none; border-radius: 4px; transition: all 0.2s; font-family: inherit; }
+    .btn-primary { background: #238636; color: #fff; border: 1px solid #2ea043; }
+    .btn-primary:hover { background: #2ea043; }
+    .tools { padding: 1.5rem 0; border-top: 1px solid #21262d; }
+    .tools h2 { font-size: 1rem; margin: 0 0 1rem; color: #8b949e; }
+    .tools h2::before { content: '// '; color: #39ff14; }
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .card { background: #161b22; border: 1px solid #21262d; border-radius: 4px; padding: 1rem; font-size: 0.8rem; }
+    .card:hover { border-color: #39ff14; }
+    .card-tag { font-size: 0.65rem; color: #39ff14; margin-bottom: 0.25rem; }
+    .card-tag::before { content: '['; color: #8b949e; }
+    .card-tag::after { content: ']'; color: #8b949e; }
+    .card h3 { font-size: 0.9rem; margin: 0 0 0.25rem; color: #c9d1d9; }
+    .card p { color: #8b949e; font-size: 0.75rem; margin: 0 0 0.5rem; }
+    .card-link { font-size: 0.75rem; color: #39ff14; text-decoration: none; }
+    .card-link:hover { color: #7ee787; }
+    .card-link::before { content: '→ '; }
+    .card.card-coming { opacity: 0.6; border-style: dashed; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <a href="#" class="logo">cybervets-solutions</a>
+      <nav class="nav"><a href="#tools">tools</a><a href="#about">about</a><a href="#">github</a></nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="cli-prompt"><span>user@cybervets</span> ~ $ cat mission.txt</div>
+        <h1>Cloud infrastructure, built for veterans.</h1>
+        <p class="hero-sub">Automation scripts for AWS—SSL/TLS, CloudFront, ALB, Route 53.</p>
+        <div class="cli-prompt"><span>user@cybervets</span> ~ $ ./deploy</div>
+        <a href="#" class="btn btn-primary">View on GitHub</a>
+      </div>
+    </section>
+    <section class="tools">
+      <div class="container">
+        <h2>Tools</h2>
+        <div class="card-grid">
+          <article class="card">
+            <span class="card-tag">PowerShell</span>
+            <h3>CyberVets SSL Attach</h3>
+            <p>Attach ACM certs to CloudFront or ALB with Route 53 updates.</p>
+            <a href="#" class="card-link">github</a>
+          </article>
+          <article class="card card-coming">
+            <span class="card-tag">Coming soon</span>
+            <h3>More tools</h3>
+            <p>Additional AWS automation utilities.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

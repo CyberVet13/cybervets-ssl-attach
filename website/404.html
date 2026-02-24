@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 | CyberVets Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
     .error-page { text-align: center; padding: 4rem 1.5rem; }
@@ -11,11 +14,17 @@
     .error-page p { color: var(--text-muted); margin-bottom: 1.5rem; }
   </style>
 </head>
-<body>
+<body data-theme="refinement">
   <header class="header">
     <div class="container">
-      <a href="/" class="logo">CyberVets Solutions</a>
+      <a href="/" class="logo">CyberVets Solutions<span class="hero-badge">Built by vets</span></a>
       <nav class="nav">
+        <div class="theme-switcher">
+          <span class="theme-label">Theme</span>
+          <button type="button" data-theme="refinement" class="active" aria-pressed="true">Refinement</button>
+          <button type="button" data-theme="enterprise" aria-pressed="false">Enterprise</button>
+          <button type="button" data-theme="developer" aria-pressed="false">Developer</button>
+        </div>
         <a href="/#tools">Tools</a>
         <a href="/#about">About</a>
         <a href="https://github.com/CyberVet13" target="_blank" rel="noopener">GitHub</a>
@@ -27,5 +36,28 @@
     <p>Page not found.</p>
     <a href="/" class="btn btn-primary">Back to home</a>
   </main>
+  <script>
+    (function() {
+      var KEY = 'cybervets-theme';
+      var body = document.body;
+      var buttons = document.querySelectorAll('.theme-switcher button');
+      function setTheme(theme) {
+        body.setAttribute('data-theme', theme);
+        try { localStorage.setItem(KEY, theme); } catch (e) {}
+        buttons.forEach(function(btn) {
+          var isActive = btn.getAttribute('data-theme') === theme;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive);
+        });
+      }
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() { setTheme(btn.getAttribute('data-theme')); });
+      });
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved && ['refinement','enterprise','developer'].indexOf(saved) >= 0) setTheme(saved);
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>

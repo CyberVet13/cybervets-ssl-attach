@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Preview | CyberVets Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'DM Sans', sans-serif; background: #0d0d14; color: #eee; padding: 1.5rem; }
+    h1 { text-align: center; margin-bottom: 1.5rem; font-size: 1.25rem; }
+    .preview-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 1200px; margin: 0 auto; }
+    @media (max-width: 900px) { .preview-row { grid-template-columns: 1fr; } }
+    .preview-box { border-radius: 8px; overflow: hidden; border: 1px solid #333; }
+    .preview-label { padding: 0.5rem; font-size: 0.8rem; text-align: center; background: #1a1a2e; font-weight: 600; }
+    .preview-inner { height: 400px; overflow-y: auto; }
+    /* Option A */
+    .preview-a .preview-inner { background: linear-gradient(180deg, #0f1419 0%, #161b22 50%, #0f1419 100%); font-family: 'DM Sans', sans-serif; font-size: 13px; color: #e6edf3; padding: 1rem; }
+    .preview-a .logo { font-family: 'JetBrains Mono', monospace; color: #e6edf3; }
+    .preview-a .badge { font-size: 0.6rem; color: #3fb950; background: rgba(63,185,80,0.2); padding: 0.1rem 0.3rem; border-radius: 4px; }
+    .preview-a .btn-pri { background: #3fb950; color: #0f1419; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; text-decoration: none; display: inline-block; margin-top: 0.5rem; }
+    .preview-a .btn-sec { background: transparent; color: #58a6ff; border: 1px solid #30363d; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; margin-left: 0.3rem; }
+    .preview-a .card { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 0.75rem; margin-top: 0.5rem; }
+    .preview-a .card:hover { border-color: #3fb950; }
+    .preview-a .card-tag { font-size: 0.6rem; color: #3fb950; }
+    .preview-a .card-link { font-size: 0.7rem; color: #3fb950; }
+    /* Option B */
+    .preview-b .preview-inner { background: #f8f9fc; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #1a1a2e; padding: 1rem; }
+    .preview-b .logo { font-family: 'JetBrains Mono', monospace; color: #1a1a2e; }
+    .preview-b .header-wrap { background: #fff; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; margin: -1rem -1rem 1rem -1rem; padding: 0.5rem 1rem; }
+    .preview-b .btn-pri { background: #2563eb; color: #fff; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; text-decoration: none; display: inline-block; margin-top: 0.5rem; }
+    .preview-b .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.75rem; margin-top: 0.5rem; }
+    .preview-b .card-tag { font-size: 0.6rem; color: #2563eb; background: #eff6ff; padding: 0.1rem 0.3rem; border-radius: 4px; }
+    .preview-b .card-link { font-size: 0.7rem; color: #2563eb; }
+    .preview-b .muted { color: #64748b; }
+    /* Option C */
+    .preview-c .preview-inner { background: #0d1117; font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace; font-size: 12px; color: #39ff14; padding: 1rem; }
+    .preview-c .logo { font-family: 'JetBrains Mono', monospace; color: #39ff14; }
+    .preview-c .logo::before { content: '> '; color: #8b949e; }
+    .preview-c .cli { font-size: 0.65rem; color: #8b949e; margin: 0.3rem 0; }
+    .preview-c .cli span { color: #39ff14; }
+    .preview-c .btn-pri { background: #238636; color: #fff; border: 1px solid #2ea043; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.7rem; font-family: inherit; margin-top: 0.5rem; }
+    .preview-c .card { background: #161b22; border: 1px solid #21262d; border-radius: 4px; padding: 0.75rem; margin-top: 0.5rem; font-size: 0.7rem; }
+    .preview-c .card:hover { border-color: #39ff14; }
+    .preview-c .card-tag { font-size: 0.6rem; color: #39ff14; }
+    .preview-c .card-tag::before { content: '['; color: #8b949e; }
+    .preview-c .card-tag::after { content: ']'; color: #8b949e; }
+    .preview-c .card-link { font-size: 0.65rem; color: #39ff14; }
+    .preview-c .card-link::before { content: '→ '; }
+    .preview-c .muted { color: #8b949e; }
+    .preview-c .card h3 { color: #c9d1d9; }
+    .flex { display: flex; justify-content: space-between; align-items: center; }
+    .nav a { color: inherit; text-decoration: none; font-size: 0.7rem; margin-left: 0.5rem; opacity: 0.8; }
+    .nav a:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+  <h1>CyberVets Solutions — Design Direction Preview</h1>
+  <div class="preview-row">
+    <div class="preview-box preview-a">
+      <div class="preview-label">A. Refinement</div>
+      <div class="preview-inner">
+        <div class="flex"><span class="logo">CyberVets Solutions <span class="badge">Built by vets</span></span><nav class="nav"><a href="#">Tools</a><a href="#">About</a><a href="#">GitHub</a></nav></div>
+        <h2 style="font-size:1.1rem;margin:1.5rem 0 0.5rem">Cloud infrastructure,<br>built for veterans.</h2>
+        <p style="color:#8b949e;font-size:0.8rem;margin:0">Automation scripts for AWS—SSL/TLS, CloudFront, ALB, Route 53.</p>
+        <a href="#" class="btn-pri">View on GitHub</a><a href="#" class="btn-sec">Quick start</a>
+        <p style="font-size:0.65rem;color:#8b949e;margin-top:0.8rem">Open source · MIT · AWS</p>
+        <p style="font-size:0.85rem;margin-top:1.5rem;margin-bottom:0.3rem">Tools</p>
+        <div class="card"><span class="card-tag">PowerShell</span><h3 style="margin:0.2rem 0;font-size:0.85rem">CyberVets SSL Attach</h3><p style="margin:0;font-size:0.75rem;color:#8b949e">Attach ACM certs to CloudFront or ALB.</p><a href="#" class="card-link">GitHub →</a></div>
+        <div class="card" style="opacity:0.7;border-style:dashed"><span class="card-tag">Coming soon</span><h3 style="margin:0.2rem 0;font-size:0.85rem">More tools</h3></div>
+      </div>
+    </div>
+    <div class="preview-box preview-b">
+      <div class="preview-label">B. Enterprise</div>
+      <div class="preview-inner">
+        <div class="header-wrap flex"><span class="logo">CyberVets Solutions</span><nav class="nav"><a href="#" style="color:#64748b">Tools</a><a href="#" style="color:#64748b">About</a><a href="#" style="color:#64748b">GitHub</a></nav></div>
+        <h2 style="font-size:1.1rem;margin:0 0 0.5rem;color:#0f172a">Cloud infrastructure,<br>built for veterans.</h2>
+        <p class="muted" style="font-size:0.8rem;margin:0">Automation scripts for AWS—SSL/TLS, CloudFront, ALB, Route 53.</p>
+        <a href="#" class="btn-pri">View on GitHub</a>
+        <p style="font-size:0.85rem;margin-top:1.5rem;margin-bottom:0.3rem;color:#0f172a">Tools</p>
+        <div class="card"><span class="card-tag">PowerShell</span><h3 style="margin:0.2rem 0;font-size:0.85rem;color:#0f172a">CyberVets SSL Attach</h3><p class="muted" style="margin:0;font-size:0.75rem">Attach ACM certs to CloudFront or ALB.</p><a href="#" class="card-link">GitHub →</a></div>
+        <div class="card" style="border-style:dashed;opacity:0.8"><span class="card-tag">Coming soon</span><h3 style="margin:0.2rem 0;font-size:0.85rem;color:#0f172a">More tools</h3></div>
+      </div>
+    </div>
+    <div class="preview-box preview-c">
+      <div class="preview-label">C. Developer</div>
+      <div class="preview-inner">
+        <div class="flex"><span class="logo">cybervets-solutions</span><nav class="nav"><a href="#">tools</a><a href="#">about</a><a href="#">github</a></nav></div>
+        <div class="cli"><span>user@cybervets</span> ~ $ cat mission.txt</div>
+        <h2 style="font-size:1rem;margin:0.3rem 0 0.5rem;color:#c9d1d9;font-family:inherit">Cloud infrastructure, built for veterans.</h2>
+        <p class="muted" style="font-size:0.75rem;margin:0">Automation scripts for AWS—SSL/TLS, CloudFront, ALB, Route 53.</p>
+        <div class="cli"><span>user@cybervets</span> ~ $ ./deploy</div>
+        <a href="#" class="btn-pri">View on GitHub</a>
+        <p style="font-size:0.75rem;margin-top:1.5rem;margin-bottom:0.3rem" class="muted">// Tools</p>
+        <div class="card"><span class="card-tag">PowerShell</span><h3 style="margin:0.2rem 0;font-size:0.8rem">CyberVets SSL Attach</h3><p class="muted" style="margin:0;font-size:0.65rem">Attach ACM certs to CloudFront or ALB.</p><a href="#" class="card-link">github</a></div>
+        <div class="card" style="opacity:0.6;border-style:dashed"><span class="card-tag">Coming soon</span><h3 style="margin:0.2rem 0;font-size:0.8rem">More tools</h3></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

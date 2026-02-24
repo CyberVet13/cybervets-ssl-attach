@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.8] - 2026-02-22
+
+### Added
+
+- **website** – Theme switcher (Refinement, Enterprise, Developer) with localStorage persistence
+  - Refinement: dark gradient, "Built by vets" badge, card hover effects
+  - Enterprise: light palette, neutral blues, white cards
+  - Developer: terminal aesthetic, monospace, CLI-style elements
+- **deploy-website.ps1** – Exclude design-preview*.html from S3 sync
+
 ## [1.0.7] - 2026-02-25
 
 ### Fixed

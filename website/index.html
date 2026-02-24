@@ -7,14 +7,20 @@
   <meta name="description" content="CyberVets Solutions – AWS cloud infrastructure, SSL/TLS automation, and security tools. Built by veterans, for modern cloud.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-theme="refinement">
   <header class="header">
     <div class="container">
-      <a href="/" class="logo">CyberVets Solutions</a>
+      <a href="/" class="logo">CyberVets Solutions<span class="hero-badge">Built by vets</span></a>
       <nav class="nav">
+        <div class="theme-switcher">
+          <span class="theme-label">Theme</span>
+          <button type="button" data-theme="refinement" class="active" aria-pressed="true">Refinement</button>
+          <button type="button" data-theme="enterprise" aria-pressed="false">Enterprise</button>
+          <button type="button" data-theme="developer" aria-pressed="false">Developer</button>
+        </div>
         <a href="#tools">Tools</a>
         <a href="#about">About</a>
         <a href="https://github.com/CyberVet13" target="_blank" rel="noopener">GitHub</a>
@@ -41,7 +47,7 @@
             <p>Attach ACM certificates to CloudFront or ALB with optional Route 53 DNS updates. Interactive or parameter-driven.</p>
             <a href="https://github.com/CyberVet13/cybervets-ssl-attach" class="card-link" target="_blank" rel="noopener">GitHub →</a>
           </article>
-          <article class="card">
+          <article class="card card-coming">
             <span class="card-tag">Coming soon</span>
             <h3>More tools</h3>
             <p>Additional AWS automation and security utilities in development.</p>
@@ -63,5 +69,28 @@
       <p>© 2026 CyberVets Solutions. MIT License.</p>
     </div>
   </footer>
+  <script>
+    (function() {
+      var KEY = 'cybervets-theme';
+      var body = document.body;
+      var buttons = document.querySelectorAll('.theme-switcher button');
+      function setTheme(theme) {
+        body.setAttribute('data-theme', theme);
+        try { localStorage.setItem(KEY, theme); } catch (e) {}
+        buttons.forEach(function(btn) {
+          var isActive = btn.getAttribute('data-theme') === theme;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive);
+        });
+      }
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() { setTheme(btn.getAttribute('data-theme')); });
+      });
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved && ['refinement','enterprise','developer'].indexOf(saved) >= 0) setTheme(saved);
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>

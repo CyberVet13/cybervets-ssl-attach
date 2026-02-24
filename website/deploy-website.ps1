@@ -56,11 +56,11 @@ if ($WhatIf) {
   if ($bucketExists) {
     $prevEA = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
-    try { aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --dryrun 2>&1 } finally { $ErrorActionPreference = $prevEA }
+    try { aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --exclude "design-preview*.html" --dryrun 2>&1 } finally { $ErrorActionPreference = $prevEA }
   }
 } else {
   Write-Host "Uploading files..."
-  aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --delete
+  aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --exclude "design-preview*.html" --delete
 }
 
 # Optional: apply public read policy

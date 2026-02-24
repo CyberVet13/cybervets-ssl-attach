@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.5; color: #e6edf3; background: linear-gradient(180deg, #0f1419 0%, #161b22 50%, #0f1419 100%); min-height: 100%; }
+    .container { max-width: 100%; padding: 0 1rem; }
+    .header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #30363d; }
+    .logo { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: #e6edf3; text-decoration: none; font-size: 0.95rem; }
+    .logo:hover { color: #3fb950; }
+    .badge { font-size: 0.65rem; color: #3fb950; background: rgba(63,185,80,0.15); padding: 0.15rem 0.4rem; border-radius: 4px; margin-left: 0.5rem; vertical-align: middle; }
+    .nav { display: flex; gap: 1rem; }
+    .nav a { color: #8b949e; text-decoration: none; font-size: 0.85rem; }
+    .nav a:hover { color: #3fb950; }
+    .hero { padding: 2rem 0; }
+    .hero h1 { font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
+    .hero-sub { color: #8b949e; font-size: 0.9rem; margin: 0 0 1rem; max-width: 28ch; }
+    .btn { display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; border-radius: 6px; transition: all 0.2s; }
+    .btn-primary { background: #3fb950; color: #0f1419; }
+    .btn-primary:hover { background: #56d364; transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: #58a6ff; border: 1px solid #30363d; margin-left: 0.5rem; }
+    .btn-secondary:hover { border-color: #58a6ff; }
+    .tools { padding: 1.5rem 0; border-top: 1px solid #30363d; }
+    .tools h2 { font-size: 1.1rem; margin: 0 0 1rem; }
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); border-color: #3fb950; }
+    .card-tag { font-size: 0.65rem; color: #3fb950; margin-bottom: 0.25rem; }
+    .card h3 { font-size: 0.95rem; margin: 0 0 0.25rem; }
+    .card p { color: #8b949e; font-size: 0.8rem; margin: 0 0 0.5rem; }
+    .card-link { font-size: 0.8rem; color: #3fb950; text-decoration: none; }
+    .card-link:hover { color: #56d364; }
+    .trust { font-size: 0.7rem; color: #8b949e; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <a href="#" class="logo">CyberVets Solutions <span class="badge">Built by vets</span></a>
+      <nav class="nav"><a href="#tools">Tools</a><a href="#about">About</a><a href="#">GitHub</a></nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Cloud infrastructure,<br>built for veterans.</h1>
+        <p class="hero-sub">Automation scripts and tools for AWS—SSL/TLS, CloudFront, ALB, Route 53.</p>
+        <a href="#" class="btn btn-primary">View on GitHub</a>
+        <a href="#" class="btn btn-secondary">Quick start</a>
+        <p class="trust">Open source · MIT · AWS</p>
+      </div>
+    </section>
+    <section class="tools">
+      <div class="container">
+        <h2>Tools</h2>
+        <div class="card-grid">
+          <article class="card">
+            <span class="card-tag">PowerShell</span>
+            <h3>CyberVets SSL Attach</h3>
+            <p>Attach ACM certs to CloudFront or ALB with Route 53 updates.</p>
+            <a href="#" class="card-link">GitHub →</a>
+          </article>
+          <article class="card" style="opacity: 0.7; border-style: dashed;">
+            <span class="card-tag">Coming soon</span>
+            <h3>More tools</h3>
+            <p>Additional AWS automation utilities.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
