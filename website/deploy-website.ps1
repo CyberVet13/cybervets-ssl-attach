@@ -17,8 +17,16 @@ if (-not (Get-Command aws -ErrorAction SilentlyContinue)) {
 }
 
 # Ensure bucket exists (head-bucket returns no stdout; check exit code)
-aws s3api head-bucket --bucket $BucketName 2>$null
-if ($LASTEXITCODE -ne 0) {
+# SilentlyContinue prevents PowerShell from treating AWS CLI stderr as NativeCommandError
+$prevEA = $ErrorActionPreference
+$ErrorActionPreference = 'SilentlyContinue'
+try {
+  $null = aws s3api head-bucket --bucket $BucketName 2>&1
+} finally {
+  $ErrorActionPreference = $prevEA
+}
+$bucketExists = ($LASTEXITCODE -eq 0)
+if (-not $bucketExists) {
   if ($WhatIf) {
     Write-Host "[WhatIf] Would create S3 bucket $BucketName in $Region"
   } else {
@@ -41,7 +49,11 @@ $source = Join-Path $scriptDir "."
 
 if ($WhatIf) {
   Write-Host "[WhatIf] Would sync $source to s3://$BucketName"
-  aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --dryrun
+  if ($bucketExists) {
+    $prevEA = $ErrorActionPreference
+    $ErrorActionPreference = 'SilentlyContinue'
+    try { aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --dryrun 2>&1 } finally { $ErrorActionPreference = $prevEA }
+  }
 } else {
   Write-Host "Uploading files..."
   aws s3 sync $source "s3://$BucketName" --exclude "*.ps1" --exclude "*.md" --exclude "*.yaml" --delete

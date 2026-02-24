@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.6] - 2026-02-25
+
+### Fixed
+
+- **deploy-website.ps1** – Suppress AWS CLI stderr (SilentlyContinue) so head-bucket doesn't throw; skip sync --dryrun when bucket doesn't exist in WhatIf
+
+### Added
+
+- **deploy-website.Tests.ps1** – Pester tests for syntax and parameters
+
 ## [1.0.5] - 2026-02-25
 
 ### Fixed
