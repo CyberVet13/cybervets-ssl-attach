@@ -31,7 +31,11 @@ if (-not $bucketExists) {
     Write-Host "[WhatIf] Would create S3 bucket $BucketName in $Region"
   } else {
     Write-Host "Creating bucket $BucketName..."
-    aws s3api create-bucket --bucket $BucketName --region $Region
+    if ($Region -eq "us-east-1") {
+      aws s3api create-bucket --bucket $BucketName --region $Region
+    } else {
+      aws s3api create-bucket --bucket $BucketName --region $Region --create-bucket-configuration "LocationConstraint=$Region"
+    }
     if ($Region -ne "us-east-1") {
       aws s3api put-bucket-versioning --bucket $BucketName --versioning-configuration Status=Enabled 2>$null
     }
